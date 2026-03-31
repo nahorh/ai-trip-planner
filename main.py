@@ -9,7 +9,7 @@ from dotenv import load_dotenv
 from pydantic import BaseModel
 load_dotenv()
 
-app = FastAPI()
+app = FastAPI(title="AI Trip Planner", version="1.0.0")
 
 app.add_middleware(
     CORSMiddleware,
@@ -20,6 +20,14 @@ app.add_middleware(
 )
 class QueryRequest(BaseModel):
     question: str
+
+
+@app.get("/")
+async def root():
+    return {
+        "status": "ok",
+        "message": "AI Trip Planner backend is running. POST a question to /query.",
+    }
 
 @app.post("/query")
 async def query_travel_agent(query:QueryRequest):

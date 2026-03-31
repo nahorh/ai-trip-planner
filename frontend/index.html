@@ -9,27 +9,33 @@
         color-scheme: light dark;
         --primary: #2563eb;
         --primary-dark: #1d4ed8;
-        --bg: #0f172a;
-        --card: rgba(15, 23, 42, 0.85);
+        --bg: #060918;
+        --surface: rgba(13, 19, 38, 0.65);
+        --surface-strong: rgba(12, 18, 36, 0.9);
         --text: #e2e8f0;
+        --muted: #94a3b8;
       }
 
       :root[data-theme='light'] {
         color-scheme: light;
         --primary: #2563eb;
         --primary-dark: #1d4ed8;
-        --bg: #f8fafc;
-        --card: rgba(255, 255, 255, 0.94);
+        --bg: #f4f7fb;
+        --surface: rgba(255, 255, 255, 0.9);
+        --surface-strong: rgba(255, 255, 255, 0.98);
         --text: #0f172a;
+        --muted: #475569;
       }
 
       :root[data-theme='dark'] {
         color-scheme: dark;
         --primary: #60a5fa;
         --primary-dark: #2563eb;
-        --bg: #020617;
-        --card: rgba(15, 23, 42, 0.9);
-        --text: #e2e8f0;
+        --bg: #030712;
+        --surface: rgba(15, 23, 42, 0.75);
+        --surface-strong: rgba(15, 23, 42, 0.92);
+        --text: #f8fafc;
+        --muted: #94a3b8;
       }
 
       * {
@@ -41,10 +47,9 @@
         font-family: "Inter", system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
         min-height: 100vh;
         display: flex;
-        align-items: center;
         justify-content: center;
-        padding: 4rem 2rem 2rem;
-        background: radial-gradient(circle at top, rgba(59, 130, 246, 0.25), transparent), linear-gradient(120deg, var(--bg), #0f172a);
+        padding: 5rem 1.5rem 2rem;
+        background: linear-gradient(135deg, rgba(37, 99, 235, 0.15), rgba(15, 23, 42, 0.9)), var(--bg);
         color: var(--text);
         transition: background 0.4s ease, color 0.4s ease;
       }
@@ -59,7 +64,7 @@
         justify-content: space-between;
         align-items: center;
         backdrop-filter: blur(8px);
-        background: rgba(15, 23, 42, 0.45);
+        background: rgba(4, 6, 22, 0.3);
         border-bottom: 1px solid rgba(148, 163, 184, 0.2);
         z-index: 10;
       }
@@ -74,81 +79,48 @@
         gap: 0.5rem;
       }
 
-      .menu-toggle {
-        border: 1px solid rgba(148, 163, 184, 0.4);
-        background: rgba(15, 23, 42, 0.6);
-        border-radius: 0.75rem;
-        padding: 0.4rem 0.6rem;
+      .theme-switcher {
         display: flex;
-        flex-direction: column;
-        gap: 0.25rem;
-        cursor: pointer;
-        transition: border-color 0.3s;
-      }
-
-      .menu-toggle span {
-        width: 1.5rem;
-        height: 2px;
-        background: var(--text);
-        border-radius: 1rem;
-      }
-
-      .menu-panel {
-        position: absolute;
-        top: 3.5rem;
-        right: 2rem;
-        background: var(--card);
-        border: 1px solid rgba(148, 163, 184, 0.2);
-        border-radius: 1rem;
-        padding: 1rem;
-        width: 220px;
-        box-shadow: 0 15px 45px rgba(15, 23, 42, 0.35);
-        display: none;
-      }
-
-      .menu-panel.open {
-        display: block;
-      }
-
-      .menu-panel h3 {
-        margin: 0 0 0.8rem;
-        font-size: 0.9rem;
-        letter-spacing: 0.05em;
-        text-transform: uppercase;
-        color: #cbd5f5;
-      }
-
-      .theme-options button {
-        width: 100%;
-        background: transparent;
+        gap: 0.4rem;
+        background: rgba(11, 18, 35, 0.55);
+        border-radius: 999px;
+        padding: 0.35rem;
         border: 1px solid rgba(148, 163, 184, 0.3);
+      }
+
+      .theme-switcher button {
+        border: none;
+        background: transparent;
         color: var(--text);
-        border-radius: 0.75rem;
-        padding: 0.6rem 0.8rem;
-        margin-bottom: 0.5rem;
-        text-align: left;
-        font-weight: 500;
+        padding: 0.35rem 0.8rem;
+        border-radius: 999px;
+        font-size: 0.85rem;
+        font-weight: 600;
         cursor: pointer;
-        transition: border-color 0.2s, transform 0.2s;
+        opacity: 0.65;
+        transition: background 0.2s, opacity 0.2s;
       }
 
-      .theme-options button.active {
-        border-color: var(--primary);
-        background: rgba(37, 99, 235, 0.15);
+      .theme-switcher button.active {
+        background: var(--primary);
+        color: #fff;
+        opacity: 1;
       }
 
-      .theme-options button:last-child {
-        margin-bottom: 0;
+      .app-shell {
+        width: min(1100px, 100%);
+        display: grid;
+        gap: 1.5rem;
       }
 
       .card {
-        width: min(900px, 100%);
-        background: var(--card);
+        background: var(--surface-strong);
         border-radius: 24px;
-        padding: 2.5rem;
+        padding: 2rem;
         border: 1px solid rgba(148, 163, 184, 0.2);
         box-shadow: 0 25px 75px rgba(15, 23, 42, 0.5);
         backdrop-filter: blur(18px);
+        min-height: 520px;
       }
 
       h1 {
@@ -162,7 +134,7 @@
 
       .subtitle {
         margin-bottom: 2rem;
-        color: #cbd5f5;
+        color: var(--muted);
         font-size: 1rem;
       }
 
@@ -173,25 +145,26 @@
         color: #cbd5f5;
       }
 
-      input[type="text"] {
+      textarea {
         width: 100%;
-        padding: 1rem 1.2rem;
-        border-radius: 14px;
+        padding: 1.1rem 1.25rem;
+        border-radius: 18px;
         border: 1px solid rgba(148, 163, 184, 0.3);
-        background: rgba(15, 23, 42, 0.65);
+        background: rgba(12, 18, 36, 0.65);
         color: var(--text);
         font-size: 1rem;
+        min-height: 120px;
+        resize: vertical;
         transition: border-color 0.2s, box-shadow 0.2s;
       }
 
-      input[type="text"]:focus {
+      textarea:focus {
         outline: none;
         border-color: var(--primary);
         box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.25);
       }
 
       button {
-        margin-top: 1.25rem;
         display: inline-flex;
         align-items: center;
         gap: 0.6rem;
@@ -211,23 +184,37 @@
         box-shadow: 0 12px 20px rgba(37, 99, 235, 0.25);
       }
 
-      .output {
-        margin-top: 2.5rem;
-        padding: 2rem;
-        border-radius: 20px;
-        background: rgba(15, 23, 42, 0.8);
-        border: 1px solid rgba(148, 163, 184, 0.2);
-        min-height: 160px;
-        white-space: pre-wrap;
-        line-height: 1.6;
+      .chat-window {
+        display: flex;
+        flex-direction: column;
+        gap: 1.5rem;
+        max-height: 420px;
+        overflow-y: auto;
       }
 
-      .output.empty {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        color: #94a3b8;
-        font-style: italic;
+      .message {
+        padding: 1rem 1.25rem;
+        border-radius: 18px;
+        border: 1px solid rgba(148, 163, 184, 0.15);
+        background: rgba(15, 23, 42, 0.65);
+        line-height: 1.6;
+        animation: fadeIn 0.3s ease;
+        white-space: pre-wrap;
+      }
+
+      .message.user {
+        align-self: flex-end;
+        background: rgba(37, 99, 235, 0.15);
+        border-color: rgba(37, 99, 235, 0.4);
+      }
+
+      .message.ai {
+        align-self: flex-start;
+      }
+
+      @keyframes fadeIn {
+        from { opacity: 0; transform: translateY(6px); }
+        to { opacity: 1; transform: translateY(0); }
       }
 
       .spinner {
@@ -261,50 +248,51 @@
   <body>
     <header>
       <span class="brand">🌍 AI Trip Planner</span>
-      <button class="menu-toggle" aria-label="Toggle menu">
-        <span></span>
-        <span></span>
-        <span></span>
-      </button>
-      <div class="menu-panel" id="menu-panel">
-        <h3>Theme</h3>
-        <div class="theme-options">
-          <button data-theme="light">Light</button>
-          <button data-theme="dark">Dark</button>
-          <button data-theme="device">Device</button>
-        </div>
+      <div class="theme-switcher">
+        <button data-theme="light">Light</button>
+        <button data-theme="dark">Dark</button>
+        <button data-theme="device">Device</button>
       </div>
     </header>
 
-    <main class="card">
-      <h1>🌍 Travel Planner Agent</h1>
-      <p class="subtitle">
-        Describe your ideal getaway and we’ll craft an itinerary with weather, attractions,
-        and budgeting tips powered by the backend agent.
-      </p>
-      <form id="trip-form">
-        <label for="prompt">Tell us about your next trip</label>
-        <input id="prompt" type="text" placeholder="e.g. Plan a 5-day family trip to Goa" required />
-        <button type="submit">
-          Generate plan
-          <span class="spinner"></span>
-        </button>
-      </form>
+    <div class="app-shell">
+      <main class="card">
+        <h1>Plan unforgettable trips</h1>
+        <p class="subtitle">
+          Describe your dream getaway and our agent will assemble logistics, activities, weather insights,
+          and budgeting guidance—powered by live tools.
+        </p>
 
-      <section id="output" class="output empty">
-        Your travel plan will appear here. ✈️
-      </section>
-      <p class="footnote">
-        *This assistant uses live APIs and LLM tools. Please double-check prices, availability,
-        and travel requirements before booking.
-      </p>
-    </main>
+        <div class="chat-window" id="messages">
+          <div class="message ai" id="placeholder">
+            Your travel plan will appear here. ✈️
+          </div>
+        </div>
+
+        <div class="input-area">
+          <label for="prompt">Tell us about your next trip</label>
+          <textarea id="prompt" placeholder="e.g. Plan a 5-day family trip to Goa" required></textarea>
+          <button id="send-btn">
+            Generate plan
+            <span class="spinner"></span>
+          </button>
+        </div>
+
+        <p class="footnote">
+          *This assistant uses live APIs and LLM tools. Please double-check prices, availability,
+          and travel requirements before booking.
+        </p>
+      </main>
+    </div>
 
     <script>
       const root = document.documentElement;
-      const menuToggle = document.querySelector('.menu-toggle');
-      const menuPanel = document.getElementById('menu-panel');
-      const themeButtons = document.querySelectorAll('.theme-options button');
+      const themeButtons = document.querySelectorAll('.theme-switcher button');
+      const messagesEl = document.getElementById('messages');
+      const sendBtn = document.getElementById('send-btn');
+      const promptInput = document.getElementById('prompt');
+      const spinner = sendBtn.querySelector('.spinner');
+      const placeholder = document.getElementById('placeholder');
 
       const applyTheme = (theme) => {
         if (theme === 'device') {
@@ -325,30 +313,30 @@
         applyTheme(savedTheme);
       }
 
-      menuToggle.addEventListener('click', () => {
-        menuPanel.classList.toggle('open');
-      });
-
       themeButtons.forEach((button) => {
         button.addEventListener('click', () => {
           applyTheme(button.dataset.theme);
         });
       });
 
-      const form = document.getElementById("trip-form");
-      const promptInput = document.getElementById("prompt");
-      const output = document.getElementById("output");
-      const button = form.querySelector("button");
+      const appendMessage = (content, role) => {
+        if (placeholder) placeholder.remove();
+        const bubble = document.createElement('div');
+        bubble.className = `message ${role}`;
+        bubble.textContent = content;
+        messagesEl.appendChild(bubble);
+        messagesEl.scrollTop = messagesEl.scrollHeight;
+      };
 
-      form.addEventListener("submit", async (event) => {
-        event.preventDefault();
+      const sendPrompt = async () => {
         const question = promptInput.value.trim();
-        if (!question) return;
+        if (!question || sendBtn.disabled) return;
 
-        button.disabled = true;
-        button.classList.add("loading");
-        output.classList.remove("empty");
-        output.textContent = "Crafting your travel plan...";
+        appendMessage(question, 'user');
+        promptInput.value = '';
+
+        sendBtn.disabled = true;
+        sendBtn.classList.add('loading');
 
         try {
           const response = await fetch("/query", {
@@ -363,12 +351,20 @@
           }
 
           const data = await response.json();
-          output.textContent = data.answer || "No answer returned.";
+          appendMessage(data.answer || "No answer returned.", 'ai');
         } catch (error) {
-          output.textContent = `Something went wrong: ${error.message}`;
+          appendMessage(`Something went wrong: ${error.message}`, 'ai');
         } finally {
-          button.disabled = false;
-          button.classList.remove("loading");
+          sendBtn.disabled = false;
+          sendBtn.classList.remove('loading');
+        }
+      };
+
+      sendBtn.addEventListener('click', sendPrompt);
+
+      promptInput.addEventListener('keydown', (event) => {
+        if (event.key === 'Enter' && !event.shiftKey) {
+          event.preventDefault();
         }
       });
     </script>

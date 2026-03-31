@@ -1,9 +1,24 @@
 [project]
 name = "ai-trip-planner"
 version = "0.1.0"
-description = "Add your description here"
+description = "Trip planning agent"
 readme = "README.md"
 requires-python = ">=3.12"
 dependencies = [
-    "pandas>=2.3.0",
+    "fastapi==0.117.1",
+    "uvicorn",
+    "langchain",
+    "langchain-community",
+    "langchain-experimental",
+    "python-dotenv",
+    "streamlit",
+    "pydantic",
+    "httpx",
+    "requests",
+    "langchain-google-community[places]",
+    "langchain_tavily",
+    "langchain_groq",
+    "langchain_openai",
+    "langgraph",
+    "pandas>=2.3.0"
 ]

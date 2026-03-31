@@ -7,11 +7,45 @@
     <style>
       :root {
         color-scheme: light dark;
+        font-family: "Inter", system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
         --primary: #2563eb;
         --primary-dark: #1d4ed8;
+        --primary-light: #60a5fa;
         --bg: #0f172a;
-        --card: rgba(15, 23, 42, 0.85);
+        --surface: rgba(15, 23, 42, 0.85);
+        --surface-muted: rgba(15, 23, 42, 0.65);
+        --border: rgba(148, 163, 184, 0.2);
         --text: #e2e8f0;
+        --text-muted: #cbd5f5;
+        --shadow: 0 25px 75px rgba(15, 23, 42, 0.5);
+      }
+
+      :root.light-theme {
+        color-scheme: light;
+        --primary: #2563eb;
+        --primary-dark: #1e3a8a;
+        --primary-light: #93c5fd;
+        --bg: #f5f7fb;
+        --surface: #ffffff;
+        --surface-muted: #f8fafc;
+        --border: rgba(148, 163, 184, 0.35);
+        --text: #0f172a;
+        --text-muted: #475569;
+        --shadow: 0 20px 60px rgba(15, 23, 42, 0.15);
+      }
+
+      :root.dark-theme {
+        color-scheme: dark;
+        --primary: #60a5fa;
+        --primary-dark: #2563eb;
+        --primary-light: #93c5fd;
+        --bg: linear-gradient(120deg, #030712, #0f172a);
+        --surface: rgba(15, 23, 42, 0.9);
+        --surface-muted: rgba(15, 23, 42, 0.7);
+        --border: rgba(148, 163, 184, 0.25);
+        --text: #e2e8f0;
+        --text-muted: #cbd5f5;
+        --shadow: 0 25px 75px rgba(15, 23, 42, 0.6);
       }
 
       * {
@@ -20,23 +54,27 @@
 
       body {
         margin: 0;
-        font-family: "Inter", system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
         min-height: 100vh;
         display: flex;
         align-items: center;
         justify-content: center;
-        padding: 2rem;
-        background: radial-gradient(circle at top, rgba(59, 130, 246, 0.25), transparent), linear-gradient(120deg, #030712, #0f172a);
+        padding: clamp(1.5rem, 4vw, 4rem);
+        background: var(--bg);
         color: var(--text);
       }
 
+      main {
+        width: min(100%, 1100px);
+        display: grid;
+        gap: clamp(1.5rem, 2.5vw, 2.5rem);
+      }
+
       .card {
-        width: min(900px, 100%);
-        background: var(--card);
-        border-radius: 24px;
-        padding: 2.5rem;
-        border: 1px solid rgba(148, 163, 184, 0.2);
-        box-shadow: 0 25px 75px rgba(15, 23, 42, 0.5);
+        background: var(--surface);
+        border-radius: 28px;
+        padding: clamp(1.75rem, 3vw, 3rem);
+        border: 1px solid var(--border);
+        box-shadow: var(--shadow);
         backdrop-filter: blur(18px);
       }
 
@@ -49,25 +87,61 @@
         align-items: center;
       }
 
+      header {
+        display: flex;
+        flex-direction: column;
+        gap: 0.75rem;
+      }
+
+      @media (min-width: 768px) {
+        header {
+          flex-direction: row;
+          align-items: center;
+          justify-content: space-between;
+        }
+      }
+
       .subtitle {
-        margin-bottom: 2rem;
-        color: #cbd5f5;
+        margin: 0;
+        color: var(--text-muted);
         font-size: 1rem;
+      }
+
+      .layout {
+        display: grid;
+        gap: 1.25rem;
+      }
+
+      @media (min-width: 992px) {
+        .layout {
+          grid-template-columns: 360px 1fr;
+          gap: 1.75rem;
+        }
+      }
+
+      .panel {
+        display: flex;
+        flex-direction: column;
+        gap: 1.5rem;
+        background: var(--surface-muted);
+        padding: clamp(1.25rem, 2vw, 1.75rem);
+        border-radius: 24px;
+        border: 1px solid var(--border);
       }
 
       label {
         display: block;
         margin-bottom: 0.5rem;
         font-weight: 600;
-        color: #cbd5f5;
+        color: var(--text-muted);
       }
 
       input[type="text"] {
         width: 100%;
         padding: 1rem 1.2rem;
-        border-radius: 14px;
-        border: 1px solid rgba(148, 163, 184, 0.3);
-        background: rgba(15, 23, 42, 0.65);
+        border-radius: 16px;
+        border: 1px solid var(--border);
+        background: transparent;
         color: var(--text);
         font-size: 1rem;
         transition: border-color 0.2s, box-shadow 0.2s;
@@ -83,10 +157,11 @@
         margin-top: 1.25rem;
         display: inline-flex;
         align-items: center;
+        justify-content: center;
         gap: 0.6rem;
         border: none;
-        border-radius: 999px;
-        padding: 0.9rem 1.8rem;
+        border-radius: 18px;
+        padding: 0.95rem 1.8rem;
         background: linear-gradient(120deg, var(--primary), var(--primary-dark));
         color: #f8fafc;
         font-weight: 600;
@@ -95,28 +170,53 @@
         transition: transform 0.2s, box-shadow 0.2s;
       }
 
-      button:hover {
+      button:hover:not(:disabled) {
         transform: translateY(-1px);
-        box-shadow: 0 12px 20px rgba(37, 99, 235, 0.25);
+        box-shadow: 0 15px 35px rgba(37, 99, 235, 0.35);
+      }
+
+      button:disabled {
+        opacity: 0.7;
+        cursor: not-allowed;
       }
 
       .output {
-        margin-top: 2.5rem;
-        padding: 2rem;
-        border-radius: 20px;
-        background: rgba(15, 23, 42, 0.8);
-        border: 1px solid rgba(148, 163, 184, 0.2);
-        min-height: 160px;
-        white-space: pre-wrap;
-        line-height: 1.6;
+        margin: 0;
+        padding: clamp(1.5rem, 2vw, 2rem);
+        border-radius: 24px;
+        background: var(--surface);
+        border: 1px solid var(--border);
+        min-height: 220px;
+        line-height: 1.7;
+        font-size: 1rem;
+        overflow-wrap: anywhere;
       }
 
       .output.empty {
         display: flex;
         align-items: center;
         justify-content: center;
-        color: #94a3b8;
+        color: var(--text-muted);
         font-style: italic;
+      }
+
+      .output h2,
+      .output h3,
+      .output h4 {
+        margin-top: 1.4rem;
+        margin-bottom: 0.4rem;
+      }
+
+      .output ul,
+      .output ol {
+        padding-left: 1.4rem;
+      }
+
+      .output code {
+        background: rgba(15, 23, 42, 0.2);
+        padding: 0.2rem 0.4rem;
+        border-radius: 6px;
+        font-size: 0.95rem;
       }
 
       .spinner {
@@ -143,33 +243,87 @@
       .footnote {
         margin-top: 1.2rem;
         font-size: 0.85rem;
-        color: #94a3b8;
+        color: var(--text-muted);
+      }
+
+      .theme-controls {
+        display: flex;
+        flex-direction: column;
+        gap: 0.75rem;
+      }
+
+      .theme-toggle {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        border-radius: 18px;
+        background: var(--surface);
+        border: 1px solid var(--border);
+        overflow: hidden;
+      }
+
+      .theme-toggle button {
+        margin: 0;
+        border-radius: 0;
+        background: transparent;
+        color: var(--text);
+        border-right: 1px solid var(--border);
+        padding: 0.85rem 0.5rem;
+        font-size: 0.95rem;
+        transition: background 0.2s, color 0.2s;
+      }
+
+      .theme-toggle button:last-child {
+        border-right: none;
+      }
+
+      .theme-toggle button.active {
+        background: linear-gradient(120deg, var(--primary), var(--primary-dark));
+        color: #fff;
       }
     </style>
   </head>
   <body>
-    <main class="card">
-      <h1>🌍 Travel Planner Agent</h1>
-      <p class="subtitle">
-        Describe your ideal getaway and we’ll craft an itinerary with weather, attractions,
-        and budgeting tips powered by the backend agent.
-      </p>
-      <form id="trip-form">
-        <label for="prompt">Tell us about your next trip</label>
-        <input id="prompt" type="text" placeholder="e.g. Plan a 5-day family trip to Goa" required />
-        <button type="submit">
-          Generate plan
-          <span class="spinner"></span>
-        </button>
-      </form>
+    <main>
+      <div class="card">
+        <header>
+          <div>
+            <h1>🌍 Travel Planner Agent</h1>
+            <p class="subtitle">
+              Describe your ideal getaway and we’ll craft an itinerary with weather, attractions,
+              and budgeting tips powered by the backend agent.
+            </p>
+          </div>
+          <div class="theme-controls">
+            <label>Theme</label>
+            <div class="theme-toggle" role="group" aria-label="Theme selector">
+              <button type="button" data-theme="system" class="active">System</button>
+              <button type="button" data-theme="light">Light</button>
+              <button type="button" data-theme="dark">Dark</button>
+            </div>
+          </div>
+        </header>
 
-      <section id="output" class="output empty">
-        Your travel plan will appear here. ✈️
-      </section>
-      <p class="footnote">
-        *This assistant uses live APIs and LLM tools. Please double-check prices, availability,
-        and travel requirements before booking.
-      </p>
+        <div class="layout">
+          <section class="panel">
+            <form id="trip-form">
+              <label for="prompt">Tell us about your next trip</label>
+              <input id="prompt" type="text" placeholder="e.g. Plan a 5-day family trip to Goa" required />
+              <button type="submit">
+                Generate plan
+                <span class="spinner"></span>
+              </button>
+            </form>
+            <p class="footnote">
+              *This assistant uses live APIs and LLM tools. Please double-check prices, availability,
+              and travel requirements before booking.
+            </p>
+          </section>
+
+          <section id="output" class="output empty">
+            Your travel plan will appear here. ✈️
+          </section>
+        </div>
+      </div>
     </main>
 
     <script type="module">
@@ -180,6 +334,43 @@
       const promptInput = document.getElementById("prompt");
       const output = document.getElementById("output");
       const button = form.querySelector("button");
+      const themeButtons = document.querySelectorAll(".theme-toggle button");
+      const root = document.documentElement;
+      const STORAGE_KEY = "travel-planner-theme";
+
+      const applyTheme = (mode) => {
+        root.classList.remove("light-theme", "dark-theme");
+        if (mode === "light") root.classList.add("light-theme");
+        if (mode === "dark") root.classList.add("dark-theme");
+        if (mode === "system") {
+          const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+          root.classList.add(prefersDark ? "dark-theme" : "light-theme");
+        }
+      };
+
+      const setActiveButton = (mode) => {
+        themeButtons.forEach((btn) => {
+          btn.classList.toggle("active", btn.dataset.theme === mode);
+        });
+      };
+
+      const savedTheme = localStorage.getItem(STORAGE_KEY) || "system";
+      applyTheme(savedTheme);
+      setActiveButton(savedTheme);
+
+      themeButtons.forEach((btn) => {
+        btn.addEventListener("click", () => {
+          const selected = btn.dataset.theme;
+          localStorage.setItem(STORAGE_KEY, selected);
+          applyTheme(selected);
+          setActiveButton(selected);
+        });
+      });
+
+      window.matchMedia("(prefers-color-scheme: dark)").addEventListener("change", () => {
+        const mode = localStorage.getItem(STORAGE_KEY) || "system";
+        if (mode === "system") applyTheme("system");
+      });
 
       marked.setOptions({
         breaks: true,

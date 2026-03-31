@@ -74,6 +74,7 @@
       background: var(--bg);
       color: var(--text);
       padding: clamp(0.5rem, 2vw, 1rem);
+      overflow: hidden;
     }
 
     .app-frame {
@@ -82,11 +83,18 @@
       grid-template-columns: 280px 1fr;
       gap: 1.25rem;
       background: transparent;
+      min-height: calc(100vh - clamp(1rem, 2vw, 2rem));
     }
 
     @media (max-width: 900px) {
       .app-frame {
         grid-template-columns: 1fr;
+        position: relative;
+        padding-bottom: 0.5rem;
+      }
+
+      body {
+        overflow: auto;
       }
     }
 
@@ -100,6 +108,58 @@
       flex-direction: column;
       gap: 1.5rem;
       min-height: calc(100vh - clamp(1rem, 2vw, 2rem));
+      transition: transform 0.3s ease, opacity 0.3s ease;
+    }
+
+    .sidebar-close {
+      display: none;
+      border: none;
+      border-radius: 12px;
+      padding: 0.5rem 0.9rem;
+      background: rgba(255, 255, 255, 0.08);
+      color: var(--text);
+      font-size: 0.85rem;
+      cursor: pointer;
+    }
+
+    .sidebar-backdrop {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.5);
+      backdrop-filter: blur(2px);
+      z-index: 15;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+
+    .sidebar-backdrop.visible {
+      display: block;
+      opacity: 1;
+    }
+
+    @media (max-width: 900px) {
+      .sidebar {
+        position: fixed;
+        top: clamp(0.5rem, 2vw, 1.2rem);
+        left: clamp(0.5rem, 2vw, 1.2rem);
+        right: clamp(0.5rem, 2vw, 1.2rem);
+        max-width: 320px;
+        width: calc(100% - clamp(1rem, 4vw, 2.4rem));
+        z-index: 20;
+        transform: translateX(-120%);
+        min-height: auto;
+      }
+
+      .sidebar.open {
+        transform: translateX(0);
+      }
+
+      .sidebar-close {
+        display: inline-flex;
+        justify-content: center;
+        align-items: center;
+      }
     }
 
     .sidebar h1 {
@@ -179,6 +239,7 @@
       display: flex;
       flex-direction: column;
       min-height: calc(100vh - clamp(1rem, 2vw, 2rem));
+      max-height: calc(100vh - clamp(1rem, 2vw, 2rem));
       overflow: hidden;
     }
 
@@ -225,6 +286,8 @@
 
     .messages {
       flex: 1;
+      min-height: 0;
+      max-height: 100%;
       overflow-y: auto;
       padding: 1.5rem;
       display: flex;
@@ -455,6 +518,7 @@
 <body>
   <div class="app-frame">
     <aside class="sidebar">
+      <button type="button" class="sidebar-close" id="sidebar-close">Close</button>
       <div>
         <h1>🌍 Travel Planner</h1>
         <p class="subtitle">Your agent crafts rich itineraries powered by live data.</p>
@@ -469,14 +533,18 @@
         *Always verify prices, availability, and travel requirements before booking.
       </div>
     </aside>
+    <div class="sidebar-backdrop" id="sidebar-backdrop"></div>
 
     <section class="chat-panel">
       <header class="chat-header">
         <h2>Conversation</h2>
-        <div class="theme-toggle" role="group" aria-label="Theme selector">
-          <button type="button" data-theme="system" class="active">System</button>
-          <button type="button" data-theme="light">Light</button>
-          <button type="button" data-theme="dark">Dark</button>
+        <div class="header-actions">
+          <button type="button" class="sidebar-toggle" id="sidebar-toggle">History</button>
+          <div class="theme-toggle" role="group" aria-label="Theme selector">
+            <button type="button" data-theme="system" class="active">System</button>
+            <button type="button" data-theme="light">Light</button>
+            <button type="button" data-theme="dark">Dark</button>
+          </div>
         </div>
       </header>
 
@@ -506,6 +574,10 @@
     const messages = document.getElementById("messages");
     const button = form.querySelector("button");
     const themeButtons = document.querySelectorAll(".theme-toggle button");
+    const sidebar = document.querySelector(".sidebar");
+    const sidebarToggle = document.getElementById("sidebar-toggle");
+    const sidebarClose = document.getElementById("sidebar-close");
+    const sidebarBackdrop = document.getElementById("sidebar-backdrop");
     const root = document.documentElement;
     const STORAGE_KEY = "travel-planner-theme";
 
@@ -620,6 +692,28 @@
         button.disabled = false;
         button.classList.remove("loading");
         scrollMessages();
+      }
+    });
+
+    const toggleSidebar = (open) => {
+      if (!sidebar) return;
+      if (open) {
+        sidebar.classList.add("open");
+        sidebarBackdrop?.classList.add("visible");
+      } else {
+        sidebar.classList.remove("open");
+        sidebarBackdrop?.classList.remove("visible");
+      }
+    };
+
+    sidebarToggle?.addEventListener("click", () => toggleSidebar(true));
+    sidebarClose?.addEventListener("click", () => toggleSidebar(false));
+    sidebarBackdrop?.addEventListener("click", () => toggleSidebar(false));
+
+    const desktopMedia = window.matchMedia("(min-width: 901px)");
+    desktopMedia.addEventListener("change", (event) => {
+      if (event.matches) {
+        toggleSidebar(false);
       }
     });
   </script>

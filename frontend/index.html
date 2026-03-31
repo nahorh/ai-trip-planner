@@ -9,33 +9,9 @@
         color-scheme: light dark;
         --primary: #2563eb;
         --primary-dark: #1d4ed8;
-        --bg: #060918;
-        --surface: rgba(13, 19, 38, 0.65);
-        --surface-strong: rgba(12, 18, 36, 0.9);
+        --bg: #0f172a;
+        --card: rgba(15, 23, 42, 0.85);
         --text: #e2e8f0;
-        --muted: #94a3b8;
-      }
-
-      :root[data-theme='light'] {
-        color-scheme: light;
-        --primary: #2563eb;
-        --primary-dark: #1d4ed8;
-        --bg: #f4f7fb;
-        --surface: rgba(255, 255, 255, 0.9);
-        --surface-strong: rgba(255, 255, 255, 0.98);
-        --text: #0f172a;
-        --muted: #475569;
-      }
-
-      :root[data-theme='dark'] {
-        color-scheme: dark;
-        --primary: #60a5fa;
-        --primary-dark: #2563eb;
-        --bg: #030712;
-        --surface: rgba(15, 23, 42, 0.75);
-        --surface-strong: rgba(15, 23, 42, 0.92);
-        --text: #f8fafc;
-        --muted: #94a3b8;
       }
 
       * {
@@ -47,80 +23,21 @@
         font-family: "Inter", system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
         min-height: 100vh;
         display: flex;
+        align-items: center;
         justify-content: center;
-        padding: 5rem 1.5rem 2rem;
-        background: linear-gradient(135deg, rgba(37, 99, 235, 0.15), rgba(15, 23, 42, 0.9)), var(--bg);
+        padding: 2rem;
+        background: radial-gradient(circle at top, rgba(59, 130, 246, 0.25), transparent), linear-gradient(120deg, #030712, #0f172a);
         color: var(--text);
-        transition: background 0.4s ease, color 0.4s ease;
-      }
-
-      header {
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        padding: 1rem 2rem;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        backdrop-filter: blur(8px);
-        background: rgba(4, 6, 22, 0.3);
-        border-bottom: 1px solid rgba(148, 163, 184, 0.2);
-        z-index: 10;
-      }
-
-      header .brand {
-        font-weight: 700;
-        letter-spacing: 0.08em;
-        text-transform: uppercase;
-        font-size: 1rem;
-        display: flex;
-        align-items: center;
-        gap: 0.5rem;
-      }
-
-      .theme-switcher {
-        display: flex;
-        gap: 0.4rem;
-        background: rgba(11, 18, 35, 0.55);
-        border-radius: 999px;
-        padding: 0.35rem;
-        border: 1px solid rgba(148, 163, 184, 0.3);
-      }
-
-      .theme-switcher button {
-        border: none;
-        background: transparent;
-        color: var(--text);
-        padding: 0.35rem 0.8rem;
-        border-radius: 999px;
-        font-size: 0.85rem;
-        font-weight: 600;
-        cursor: pointer;
-        opacity: 0.65;
-        transition: background 0.2s, opacity 0.2s;
-      }
-
-      .theme-switcher button.active {
-        background: var(--primary);
-        color: #fff;
-        opacity: 1;
-      }
-
-      .app-shell {
-        width: min(1100px, 100%);
-        display: grid;
-        gap: 1.5rem;
       }
 
       .card {
-        background: var(--surface-strong);
+        width: min(900px, 100%);
+        background: var(--card);
         border-radius: 24px;
-        padding: 2rem;
+        padding: 2.5rem;
         border: 1px solid rgba(148, 163, 184, 0.2);
         box-shadow: 0 25px 75px rgba(15, 23, 42, 0.5);
         backdrop-filter: blur(18px);
-        min-height: 520px;
       }
 
       h1 {
@@ -134,7 +51,7 @@
 
       .subtitle {
         margin-bottom: 2rem;
-        color: var(--muted);
+        color: #cbd5f5;
         font-size: 1rem;
       }
 
@@ -145,26 +62,25 @@
         color: #cbd5f5;
       }
 
-      textarea {
+      input[type="text"] {
         width: 100%;
-        padding: 1.1rem 1.25rem;
-        border-radius: 18px;
+        padding: 1rem 1.2rem;
+        border-radius: 14px;
         border: 1px solid rgba(148, 163, 184, 0.3);
-        background: rgba(12, 18, 36, 0.65);
+        background: rgba(15, 23, 42, 0.65);
         color: var(--text);
         font-size: 1rem;
-        min-height: 120px;
-        resize: vertical;
         transition: border-color 0.2s, box-shadow 0.2s;
       }
 
-      textarea:focus {
+      input[type="text"]:focus {
         outline: none;
         border-color: var(--primary);
         box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.25);
       }
 
       button {
+        margin-top: 1.25rem;
         display: inline-flex;
         align-items: center;
         gap: 0.6rem;
@@ -184,37 +100,23 @@
         box-shadow: 0 12px 20px rgba(37, 99, 235, 0.25);
       }
 
-      .chat-window {
-        display: flex;
-        flex-direction: column;
-        gap: 1.5rem;
-        max-height: 420px;
-        overflow-y: auto;
-      }
-
-      .message {
-        padding: 1rem 1.25rem;
-        border-radius: 18px;
-        border: 1px solid rgba(148, 163, 184, 0.15);
-        background: rgba(15, 23, 42, 0.65);
-        line-height: 1.6;
-        animation: fadeIn 0.3s ease;
+      .output {
+        margin-top: 2.5rem;
+        padding: 2rem;
+        border-radius: 20px;
+        background: rgba(15, 23, 42, 0.8);
+        border: 1px solid rgba(148, 163, 184, 0.2);
+        min-height: 160px;
         white-space: pre-wrap;
+        line-height: 1.6;
       }
 
-      .message.user {
-        align-self: flex-end;
-        background: rgba(37, 99, 235, 0.15);
-        border-color: rgba(37, 99, 235, 0.4);
-      }
-
-      .message.ai {
-        align-self: flex-start;
-      }
-
-      @keyframes fadeIn {
-        from { opacity: 0; transform: translateY(6px); }
-        to { opacity: 1; transform: translateY(0); }
+      .output.empty {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #94a3b8;
+        font-style: italic;
       }
 
       .spinner {
@@ -246,97 +148,45 @@
     </style>
   </head>
   <body>
-    <header>
-      <span class="brand">🌍 AI Trip Planner</span>
-      <div class="theme-switcher">
-        <button data-theme="light">Light</button>
-        <button data-theme="dark">Dark</button>
-        <button data-theme="device">Device</button>
-      </div>
-    </header>
+    <main class="card">
+      <h1>🌍 Travel Planner Agent</h1>
+      <p class="subtitle">
+        Describe your ideal getaway and we’ll craft an itinerary with weather, attractions,
+        and budgeting tips powered by the backend agent.
+      </p>
+      <form id="trip-form">
+        <label for="prompt">Tell us about your next trip</label>
+        <input id="prompt" type="text" placeholder="e.g. Plan a 5-day family trip to Goa" required />
+        <button type="submit">
+          Generate plan
+          <span class="spinner"></span>
+        </button>
+      </form>
 
-    <div class="app-shell">
-      <main class="card">
-        <h1>Plan unforgettable trips</h1>
-        <p class="subtitle">
-          Describe your dream getaway and our agent will assemble logistics, activities, weather insights,
-          and budgeting guidance—powered by live tools.
-        </p>
-
-        <div class="chat-window" id="messages">
-          <div class="message ai" id="placeholder">
-            Your travel plan will appear here. ✈️
-          </div>
-        </div>
-
-        <div class="input-area">
-          <label for="prompt">Tell us about your next trip</label>
-          <textarea id="prompt" placeholder="e.g. Plan a 5-day family trip to Goa" required></textarea>
-          <button id="send-btn">
-            Generate plan
-            <span class="spinner"></span>
-          </button>
-        </div>
-
-        <p class="footnote">
-          *This assistant uses live APIs and LLM tools. Please double-check prices, availability,
-          and travel requirements before booking.
-        </p>
-      </main>
-    </div>
+      <section id="output" class="output empty">
+        Your travel plan will appear here. ✈️
+      </section>
+      <p class="footnote">
+        *This assistant uses live APIs and LLM tools. Please double-check prices, availability,
+        and travel requirements before booking.
+      </p>
+    </main>
 
     <script>
-      const root = document.documentElement;
-      const themeButtons = document.querySelectorAll('.theme-switcher button');
-      const messagesEl = document.getElementById('messages');
-      const sendBtn = document.getElementById('send-btn');
-      const promptInput = document.getElementById('prompt');
-      const spinner = sendBtn.querySelector('.spinner');
-      const placeholder = document.getElementById('placeholder');
+      const form = document.getElementById("trip-form");
+      const promptInput = document.getElementById("prompt");
+      const output = document.getElementById("output");
+      const button = form.querySelector("button");
 
-      const applyTheme = (theme) => {
-        if (theme === 'device') {
-          root.removeAttribute('data-theme');
-          localStorage.removeItem('theme');
-        } else {
-          root.setAttribute('data-theme', theme);
-          localStorage.setItem('theme', theme);
-        }
-        themeButtons.forEach((btn) => btn.classList.toggle('active', btn.dataset.theme === theme));
-        if (theme === 'device') {
-          themeButtons.forEach((btn) => btn.classList.toggle('active', btn.dataset.theme === 'device'));
-        }
-      };
-
-      const savedTheme = localStorage.getItem('theme');
-      if (savedTheme) {
-        applyTheme(savedTheme);
-      }
-
-      themeButtons.forEach((button) => {
-        button.addEventListener('click', () => {
-          applyTheme(button.dataset.theme);
-        });
-      });
-
-      const appendMessage = (content, role) => {
-        if (placeholder) placeholder.remove();
-        const bubble = document.createElement('div');
-        bubble.className = `message ${role}`;
-        bubble.textContent = content;
-        messagesEl.appendChild(bubble);
-        messagesEl.scrollTop = messagesEl.scrollHeight;
-      };
-
-      const sendPrompt = async () => {
+      form.addEventListener("submit", async (event) => {
+        event.preventDefault();
         const question = promptInput.value.trim();
-        if (!question || sendBtn.disabled) return;
+        if (!question) return;
 
-        appendMessage(question, 'user');
-        promptInput.value = '';
-
-        sendBtn.disabled = true;
-        sendBtn.classList.add('loading');
+        button.disabled = true;
+        button.classList.add("loading");
+        output.classList.remove("empty");
+        output.textContent = "Crafting your travel plan...";
 
         try {
           const response = await fetch("/query", {
@@ -351,20 +201,12 @@
           }
 
           const data = await response.json();
-          appendMessage(data.answer || "No answer returned.", 'ai');
+          output.textContent = data.answer || "No answer returned.";
         } catch (error) {
-          appendMessage(`Something went wrong: ${error.message}`, 'ai');
+          output.textContent = `Something went wrong: ${error.message}`;
         } finally {
-          sendBtn.disabled = false;
-          sendBtn.classList.remove('loading');
-        }
-      };
-
-      sendBtn.addEventListener('click', sendPrompt);
-
-      promptInput.addEventListener('keydown', (event) => {
-        if (event.key === 'Enter' && !event.shiftKey) {
-          event.preventDefault();
+          button.disabled = false;
+          button.classList.remove("loading");
         }
       });
     </script>

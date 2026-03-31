@@ -15,14 +15,14 @@ class CalculatorTool:
             return self.calculator.multiply(price_per_night, total_days)
         
         @tool
-        def calculate_total_expense(costs: list[float] | float, *extra_costs: float) -> float:
+        def calculate_total_expense(costs: list[float] | float, extra_costs: list[float] | None = None) -> float:
             """Calculate total expense of the trip"""
             if isinstance(costs, list):
                 values = [float(c) for c in costs]
             else:
                 values = [float(costs)]
             if extra_costs:
-                values.extend(float(c) for c in extra_costs)
+                values.extend(float(c) for c in extra_costs if c is not None)
             return self.calculator.calculate_total(*values)
         
         @tool

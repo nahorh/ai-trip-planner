@@ -5,17 +5,25 @@ import json
 
 class TavilyPlaceSearchTool:
     def __init__(self):
-        pass
+        self._client = TavilySearch(topic="general", include_answer="advanced")
 
-    def tavily_search_attractions(self, place: str) -> dict:
-        """
-        Searches for attractions in the specified place using TavilySearch.
-        """
-        tavily_tool = TavilySearch(topic="general", include_answer="advanced")
-        result = tavily_tool.invoke({"query": f"top attractive places in and around {place}"})
+    def _search(self, query: str) -> dict:
+        result = self._client.invoke({"query": query})
         if isinstance(result, dict) and result.get("answer"):
             return result["answer"]
         return result
+
+    def tavily_search_attractions(self, place: str) -> dict:
+        return self._search(f"top attractive places in and around {place}")
+
+    def tavily_search_restaurants(self, place: str) -> dict:
+        return self._search(f"what are the top 10 restaurants and eateries in and around {place}")
+
+    def tavily_search_activity(self, place: str) -> dict:
+        return self._search(f"activities in and around {place}")
+
+    def tavily_search_transportation(self, place: str) -> dict:
+        return self._search(f"What are the different modes of transportations available in {place}")
 
 class FoursquarePlaceSearchTool:
     def __init__(self, api_key: str):
@@ -79,33 +87,3 @@ class FoursquarePlaceSearchTool:
         else:
             raise Exception(f"Foursquare API error: {response.status_code}")
 
-    def tavily_search_restaurants(self, place: str) -> dict:
-        """
-        Searches for available restaurants in the specified place using TavilySearch.
-        """
-        tavily_tool = TavilySearch(topic="general", include_answer="advanced")
-        result = tavily_tool.invoke({"query": f"what are the top 10 restaurants and eateries in and around {place}."})
-        if isinstance(result, dict) and result.get("answer"):
-            return result["answer"]
-        return result
-    
-    def tavily_search_activity(self, place: str) -> dict:
-        """
-        Searches for popular activities in the specified place using TavilySearch.
-        """
-        tavily_tool = TavilySearch(topic="general", include_answer="advanced")
-        result = tavily_tool.invoke({"query": f"activities in and around {place}"})
-        if isinstance(result, dict) and result.get("answer"):
-            return result["answer"]
-        return result
-
-    def tavily_search_transportation(self, place: str) -> dict:
-        """
-        Searches for available modes of transportation in the specified place using TavilySearch.
-        """
-        tavily_tool = TavilySearch(topic="general", include_answer="advanced")
-        result = tavily_tool.invoke({"query": f"What are the different modes of transportations available in {place}"})
-        if isinstance(result, dict) and result.get("answer"):
-            return result["answer"]
-        return result
-    
